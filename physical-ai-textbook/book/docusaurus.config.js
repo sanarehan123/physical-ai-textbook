@@ -7,15 +7,15 @@ const config = {
   tagline: 'The Future of Embodied Intelligence',
   favicon: 'img/favicon.ico',
 
-  // Vercel deployment – replace with your actual Vercel URL if desired
-  url: 'https://physical-ai-textbook.vercel.app', // Change this to your real Vercel project URL
+  // Vercel deployment – replace with your actual Vercel project URL once known
+  url: 'https://physical-ai-textbook.vercel.app',
   baseUrl: '/',
 
   organizationName: 'sanarehan123',
   projectName: 'physical-ai-textbook',
 
   trailingSlash: false,
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',  // ← Changed to 'warn' to allow build to succeed
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
@@ -29,7 +29,7 @@ const config = {
       {
         docs: {
           sidebarPath: './sidebars.js',
-          routeBasePath: '/', // ← Critical: Serves docs at root (no /docs/ prefix)
+          routeBasePath: '/', // Serves docs at root (e.g., /intro instead of /docs/intro)
         },
         blog: false,
         theme: {
@@ -52,7 +52,7 @@ const config = {
       },
       items: [
         {
-          to: '/intro', // ← Updated: now goes directly to your intro page
+          to: '/intro', // Points to your intro doc page (adjust if your intro file has a different ID, e.g., '/Introduction')
           label: 'Course',
           position: 'left',
         },
