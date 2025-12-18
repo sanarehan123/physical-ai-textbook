@@ -1,5 +1,5 @@
 // @ts-check
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -9,10 +9,11 @@ const config = {
 
   url: 'https://sanarehan123.github.io',
   baseUrl: '/physical-ai-textbook/',
+
   organizationName: 'sanarehan123',
   projectName: 'physical-ai-textbook',
-  trailingSlash: false,
 
+  trailingSlash: false,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
@@ -71,59 +72,65 @@ const config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
+
+    // Injected scripts and elements (Google Translate + Urdu support + demo login)
+    postBodyTags: [
+      // Google Translate widget container (hidden, positioned elsewhere if needed)
+      `<div id="google_translate_element" style="display:none;"></div>`,
+
+      // Google Translate script
+      `<script>
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,ur',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+          }, 'google_translate_element');
+        }
+
+        // Trigger Urdu translation when button is clicked
+        document.addEventListener('click', (e) => {
+          if (e.target && e.target.classList.contains('translate-ur')) {
+            const select = document.querySelector('.goog-te-combo');
+            if (select) {
+              select.value = 'ur';
+              select.dispatchEvent(new Event('change'));
+            }
+          }
+        });
+
+        // Simple demo GitHub login (no backend, just localStorage)
+        function loginWithGitHub() {
+          alert('GitHub Login clicked! For demo: You are now logged in as Student + ROS Beginner + Has GPU');
+          localStorage.setItem('user', JSON.stringify({
+            role: 'Student',
+            ros: 'Beginner',
+            gpu: true,
+            robot: false,
+            lang: 'Urdu'
+          }));
+          location.reload();
+        }
+
+        // Show welcome message if user is "logged in"
+        window.addEventListener('load', () => {
+          const userData = localStorage.getItem('user');
+          if (userData) {
+            const user = JSON.parse(userData);
+            const msg = document.createElement('div');
+            msg.innerHTML = '<strong>Welcome back!</strong> ' +
+              (user.lang === 'Urdu' ? 'خوش آمدید' : 'Welcome') +
+              ' | ROS: ' + user.ros + ' | GPU: Yes';
+            msg.style.cssText = 'position:fixed;top:10px;right:10px;background:#0066ff;color:white;padding:10px 15px;border-radius:8px;z-index:9999;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,0.3);';
+            document.body.appendChild(msg);
+          }
+        });
+      </script>`,
+
+      // Load Google Translate script
+      `<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>`,
+    ],
   },
+};
 
-  // RAG CHATBOT + URDU TRANSLATE + LOGIN (all free, no backend)
-  plugins: [
-    function customPlugin() {
-      return {
-        name: 'custom-inject',
-        injectHtmlTags() {
-          return {
-            headTags: [
-              // Urdu + English Google Translate
-              {
-                tagName: 'script',
-                attributes: {
-                  src: '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
-                },
-              },
-            ],
-            postBodyTags: [
-              // RAG Chatbot – free DocsBot (replace YOUR_ID with real one in 2 min)
-              `<script src="https://cdn.docsbot.ai/chat.js" data-bot-id="pZ7k9n5v8x"></script>`,
-
-              // Google Translate Init
-              `<script>
-                function googleTranslateElementInit() {
-                  new google.translate.TranslateElement({
-                    pageLanguage: 'en',
-                    includedLanguages: 'en,ur',
-                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-                  }, 'google_translate_element');
-                }
-                // Urdu button click
-                document.addEventListener('click', e => {
-                  if (e.target.classList.contains('translate-ur')) {
-                    document.querySelector('.goog-te-combo').value = 'ur';
-                    document.querySelector('.goog-te-combo').dispatchEvent(new Event('change'));
-                  }
-                });
-                // Simple GitHub login + 5 questions
-                function loginWithGitHub() {
-                  alert('GitHub Login clicked! For demo: You are now logged in as Student + ROS Beginner + Has GPU');
-                  localStorage.setItem('user', JSON.stringify({
-                    role: 'Student', ros: 'Beginner', gpu: true, robot: false, lang: 'Urdu'
-                  }));
-                  location.reload();
-                }
-                // Show welcome message if logged in
-                window.addEventListener('load', () => {
-                  const user = localStorage.getItem('user');
-                  if (user) {
-                    const data = JSON.parse(user);
-                    const msg = document.createElement('div');
-                    msg.innerHTML = '<strong>Welcome back!</strong> ' + 
-                      (data.lang === 'Urdu' ? 'خوش آمدید' : 'Welcome') + 
-                      ' | ROS: ' + data.ros + ' | GPU: Yes';
-                    msg.style = 'position:fixed;top:10px;right:10px;background:#0066ff;color:white;padding:10px 15px;border-radius:8px;z-index:9999;font-size
+export default config;
