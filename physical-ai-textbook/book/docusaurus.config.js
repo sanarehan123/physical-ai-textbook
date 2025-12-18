@@ -7,8 +7,9 @@ const config = {
   tagline: 'The Future of Embodied Intelligence',
   favicon: 'img/favicon.ico',
 
-url: 'https://your-project-name.vercel.app',  
-baseUrl: '/',  
+  // Vercel deployment – replace with your actual Vercel URL if desired
+  url: 'https://physical-ai-textbook.vercel.app', // Change this to your real Vercel project URL
+  baseUrl: '/',
 
   organizationName: 'sanarehan123',
   projectName: 'physical-ai-textbook',
@@ -28,6 +29,7 @@ baseUrl: '/',
       {
         docs: {
           sidebarPath: './sidebars.js',
+          routeBasePath: '/', // ← Critical: Serves docs at root (no /docs/ prefix)
         },
         blog: false,
         theme: {
@@ -49,12 +51,16 @@ baseUrl: '/',
         src: 'img/logo.svg',
       },
       items: [
-        { to: '/docs/intro', label: 'Course', position: 'left' },
+        {
+          to: '/intro', // ← Updated: now goes directly to your intro page
+          label: 'Course',
+          position: 'left',
+        },
         {
           type: 'html',
           position: 'right',
           value: `
-            <button onclick="document.querySelector('.translate-ur')?.click()" style="margin:0 10px;padding:8px 16px;background:#0066ff;color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px">
+            <button class="translate-ur" style="margin:0 10px;padding:8px 16px;background:#0066ff;color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px">
               اردو میں پڑھیں
             </button>
             <button onclick="loginWithGitHub()" style="padding:8px 16px;background:#333;color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px">
@@ -73,12 +79,10 @@ baseUrl: '/',
       darkTheme: prismThemes.dracula,
     },
 
-    // Injected scripts and elements (Google Translate + Urdu support + demo login)
+    // Google Translate + Urdu button + Demo Login
     postBodyTags: [
-      // Google Translate widget container (hidden, positioned elsewhere if needed)
       `<div id="google_translate_element" style="display:none;"></div>`,
 
-      // Google Translate script
       `<script>
         function googleTranslateElementInit() {
           new google.translate.TranslateElement({
@@ -88,7 +92,7 @@ baseUrl: '/',
           }, 'google_translate_element');
         }
 
-        // Trigger Urdu translation when button is clicked
+        // Urdu button click handler
         document.addEventListener('click', (e) => {
           if (e.target && e.target.classList.contains('translate-ur')) {
             const select = document.querySelector('.goog-te-combo');
@@ -99,7 +103,7 @@ baseUrl: '/',
           }
         });
 
-        // Simple demo GitHub login (no backend, just localStorage)
+        // Demo GitHub login
         function loginWithGitHub() {
           alert('GitHub Login clicked! For demo: You are now logged in as Student + ROS Beginner + Has GPU');
           localStorage.setItem('user', JSON.stringify({
@@ -112,7 +116,7 @@ baseUrl: '/',
           location.reload();
         }
 
-        // Show welcome message if user is "logged in"
+        // Welcome banner for logged-in user
         window.addEventListener('load', () => {
           const userData = localStorage.getItem('user');
           if (userData) {
@@ -127,7 +131,6 @@ baseUrl: '/',
         });
       </script>`,
 
-      // Load Google Translate script
       `<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>`,
     ],
   },
