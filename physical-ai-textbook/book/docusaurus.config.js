@@ -7,8 +7,8 @@ const config = {
   tagline: 'The Future of Embodied Intelligence',
   favicon: 'img/favicon.ico',
 
-  url: 'https://sanarehan123.github.io',
-  baseUrl: '/physical-ai-textbook/',
+url: 'https://your-project-name.vercel.app',  
+baseUrl: '/',  
 
   organizationName: 'sanarehan123',
   projectName: 'physical-ai-textbook',
