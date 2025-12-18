@@ -1,5 +1,4 @@
 ---
-slug: /
 sidebar_position: 1
 ---
 
@@ -21,3 +20,5 @@ This textbook is designed to guide you through the essential concepts of physica
 Begin your journey by exploring the modules in sequence, starting with the fundamentals of physical AI and progressing to advanced topics in humanoid robotics and AI integration.
 
 Each module contains comprehensive chapters with practical examples, code samples, and hands-on exercises to reinforce your learning.
+
+[Get Started with the Textbook](/docs/intro)

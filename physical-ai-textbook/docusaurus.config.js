@@ -61,7 +61,7 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/sanarehan123/physical-ai-textbook/edit/main/',
-          routeBasePath: '/', // Serve docs at site root
+          routeBasePath: 'docs', // Serve docs under /docs path
         },
         blog: false, // Disable blog for textbook
         theme: {
@@ -107,19 +107,19 @@ const config = {
             items: [
               {
                 label: 'Module 1 - Foundations',
-                to: '/module-1',
+                to: '/docs/module-1',
               },
               {
                 label: 'Module 2 - ROS 2',
-                to: '/module-2',
+                to: '/docs/module-2',
               },
               {
                 label: 'Module 3 - Simulation',
-                to: '/module-3',
+                to: '/docs/module-3',
               },
               {
                 label: 'Module 4 - VLA & Capstone',
-                to: '/module-4',
+                to: '/docs/module-4',
               },
             ],
           },
