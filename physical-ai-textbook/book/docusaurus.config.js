@@ -1,22 +1,26 @@
 // @ts-check
-import { themes as prismThemes } from 'prism-react-renderer';
+import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Physical AI & Humanoid Robotics',
-  tagline: 'The Future of Embodied Intelligence',
+  tagline: 'AI Systems in the Physical World',
   favicon: 'img/favicon.ico',
 
-  // Vercel deployment – replace with your actual Vercel project URL once known
-  url: 'https://physical-ai-textbook.vercel.app',
-  baseUrl: '/',
+  url: 'https://physical-ai-textbook.vercel.app',  // Update to your actual Vercel URL once deployed
+  baseUrl: '/',                                    // Root for Vercel
 
-  organizationName: 'sanarehan123',
-  projectName: 'physical-ai-textbook',
+  // Remove or ignore these for Vercel (they're only for GitHub Pages deploy command)
+  // organizationName: 'sanarehan123',
+  // projectName: 'physical-ai-textbook',
 
   trailingSlash: false,
-  onBrokenLinks: 'warn',  // ← Changed to 'warn' to allow build to succeed
+  onBrokenLinks: 'warn',        // ← Critical: Change to 'warn' to allow build on minor link issues
   onBrokenMarkdownLinks: 'warn',
+
+  markdown: {
+    mermaid: true,
+  },
 
   i18n: {
     defaultLocale: 'en',
@@ -26,114 +30,67 @@ const config = {
   presets: [
     [
       'classic',
-      {
+      ({
         docs: {
           sidebarPath: './sidebars.js',
-          routeBasePath: '/', // Serves docs at root (e.g., /intro instead of /docs/intro)
+          editUrl: 'https://github.com/sanarehan123/physical-ai-textbook/edit/main/',  // Updated to your repo
+          routeBasePath: '/',  // Docs at root
         },
         blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
-      },
+      }),
     ],
   ],
 
-  themeConfig: {
-    image: 'img/social-card.jpg',
+  themeConfig: ({
+    image: 'img/docusaurus-social-card.svg',
     colorMode: {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Physical AI Textbook',
+      title: 'Physical AI & Humanoid Robotics',
       logo: {
-        alt: 'Logo',
+        alt: 'Physical AI & Humanoid Robotics Logo',
         src: 'img/logo.svg',
       },
       items: [
         {
-          to: '/intro', // Points to your intro doc page (adjust if your intro file has a different ID, e.g., '/Introduction')
-          label: 'Course',
+          type: 'docSidebar',
+          sidebarId: 'textbookSidebar',  // Ensure this matches your sidebars.js
           position: 'left',
+          label: 'Textbook',
         },
         {
-          type: 'html',
+          href: 'https://github.com/sanarehan123/physical-ai-textbook',
+          label: 'GitHub',
           position: 'right',
-          value: `
-            <button class="translate-ur" style="margin:0 10px;padding:8px 16px;background:#0066ff;color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px">
-              اردو میں پڑھیں
-            </button>
-            <button onclick="loginWithGitHub()" style="padding:8px 16px;background:#333;color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px">
-              GitHub Login
-            </button>
-          `,
         },
       ],
     },
     footer: {
       style: 'dark',
-      copyright: `© ${new Date().getFullYear()} Physical AI Textbook`,
+      links: [
+        // Update these 'to:' paths to match your actual doc IDs/slugs
+        {
+          title: 'Textbook',
+          items: [
+            { label: 'Module 1 - Foundations', to: '/module-1' },  // Verify these exist
+            { label: 'Module 2 - ROS 2', to: '/module-2' },
+            { label: 'Module 3 - Simulation', to: '/module-3' },
+            { label: 'Module 4 - VLA & Capstone', to: '/module-4' },
+          ],
+        },
+        // ... keep Resources and More as-is
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} Physical AI & Humanoid Robotics Textbook. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
-
-    // Google Translate + Urdu button + Demo Login
-    postBodyTags: [
-      `<div id="google_translate_element" style="display:none;"></div>`,
-
-      `<script>
-        function googleTranslateElementInit() {
-          new google.translate.TranslateElement({
-            pageLanguage: 'en',
-            includedLanguages: 'en,ur',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-          }, 'google_translate_element');
-        }
-
-        // Urdu button click handler
-        document.addEventListener('click', (e) => {
-          if (e.target && e.target.classList.contains('translate-ur')) {
-            const select = document.querySelector('.goog-te-combo');
-            if (select) {
-              select.value = 'ur';
-              select.dispatchEvent(new Event('change'));
-            }
-          }
-        });
-
-        // Demo GitHub login
-        function loginWithGitHub() {
-          alert('GitHub Login clicked! For demo: You are now logged in as Student + ROS Beginner + Has GPU');
-          localStorage.setItem('user', JSON.stringify({
-            role: 'Student',
-            ros: 'Beginner',
-            gpu: true,
-            robot: false,
-            lang: 'Urdu'
-          }));
-          location.reload();
-        }
-
-        // Welcome banner for logged-in user
-        window.addEventListener('load', () => {
-          const userData = localStorage.getItem('user');
-          if (userData) {
-            const user = JSON.parse(userData);
-            const msg = document.createElement('div');
-            msg.innerHTML = '<strong>Welcome back!</strong> ' +
-              (user.lang === 'Urdu' ? 'خوش آمدید' : 'Welcome') +
-              ' | ROS: ' + user.ros + ' | GPU: Yes';
-            msg.style.cssText = 'position:fixed;top:10px;right:10px;background:#0066ff;color:white;padding:10px 15px;border-radius:8px;z-index:9999;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,0.3);';
-            document.body.appendChild(msg);
-          }
-        });
-      </script>`,
-
-      `<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>`,
-    ],
-  },
+  }),
 };
 
 export default config;
